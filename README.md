@@ -33,3 +33,11 @@ This is a template repository with some of the learnings from OSS Scala ecosyste
 * Binary incompatibilities among dependencies are checked using [sbt-missinglink](https://github.com/scalacenter/sbt-missinglink)
 
 * Build matrix is managed using [sbt-projectmatrix](https://github.com/sbt/sbt-projectmatrix)
+
+### `sbt preCI`
+
+A `preCI` command is added - which will reformat, apply scalafix rules, create licence headers, run missinglink, etc.
+
+This command is designed to be run before pushing, **not on CI**.
+
+`sbt ci` command only runs checks, it never changes sources.

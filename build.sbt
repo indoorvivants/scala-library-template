@@ -77,7 +77,8 @@ val CICommands = Seq(
   "core/scalafmtCheckAll",
   s"core/scalafix --check $scalafixRules",
   "core/headerCheck",
-  "undeclaredCompileDependenciesTest"
+  "undeclaredCompileDependenciesTest",
+  "missinglinkCheck"
 ).mkString(";")
 
 val PrepareCICommands = Seq(
@@ -86,7 +87,9 @@ val PrepareCICommands = Seq(
   "core/test:scalafmtAll",
   "core/compile:scalafmtAll",
   "core/scalafmtSbt",
-  "core/headerCreate"
+  "core/headerCreate",
+  "missinglinkCheck",
+  "undeclaredCompileDependenciesTest"
 ).mkString(";")
 
 addCommandAlias("ci", CICommands)
