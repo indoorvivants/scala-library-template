@@ -43,7 +43,7 @@ lazy val core = projectMatrix
     scalacOptions.in(Test) ~= filterConsoleScalacOptions
   )
   .jvmPlatform(
-    scalaVersions = Seq("2.13.3", "2.12.12", "0.27.0-RC1")
+    scalaVersions = Seq("2.13.3", "2.12.12", "0.27.0-RC1", "3.0.0-M1")
   )
   .jsPlatform(
     scalaVersions = Seq("2.13.3", "2.12.12") //, "0.27.0-RC1")
