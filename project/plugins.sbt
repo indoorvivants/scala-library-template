@@ -8,4 +8,5 @@ addSbtPlugin("com.eed3si9n"              % "sbt-buildinfo"             % "0.10.0
 addSbtPlugin("com.eed3si9n"              % "sbt-projectmatrix"         % "0.6.0")
 addSbtPlugin("de.heikoseeberger"         % "sbt-header"                % "5.6.0")
 addSbtPlugin("org.scala-js"              % "sbt-scalajs"               % "1.3.0")
-addSbtPlugin("ch.epfl.lamp"              % "sbt-dotty"                 % "0.4.5")
+addSbtPlugin("ch.epfl.lamp"              % "sbt-dotty"                 % "0.4.6")
+addSbtPlugin("org.scala-native"          % "sbt-scala-native"          % "0.4.0-M2")

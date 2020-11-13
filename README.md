@@ -2,15 +2,27 @@
 
 This is a template repository with some of the learnings from OSS Scala ecosystem applied.
 
-* Publish for these combinations:
+* **Compile and Publish**
 
-    |                | JVM | Scala.js |
-    | -------------- | --- | -------- |
-    | Scala 2.12.12  | ✅   | ✅        |
-    | Scala 2.13.3   | ✅   | ✅        |
-    | Scala 3.0.0-M1 | ✅   |          |
-    | Dotty 0.27     | ✅   |          |
+    |                | JVM | Scala.js (1.x) | Scala Native (0.4.0-M2) |
+    | -------------- | --- | -------------- | ----------------------- |
+    | Scala 2.11.12  | ☠️   | ☠️              | ✅                       |
+    | Scala 2.12.12  | ✅   | ✅              | ☠️                       |
+    | Scala 2.13.3   | ✅   | ✅              | ☠️                       |
+    | Scala 3.0.0-M1 | ✅   | ✅              | ☠️                       |
+    | Dotty 0.27     | ✅   | ✅              | ☠️                       |
 
+* **Running tests**
+
+    |                | JVM | Scala.js (1.x) | Scala Native (0.4.0-M2) |
+    | -------------- | --- | -------------- | ----------------------- |
+    | Scala 2.11.12  | ☠️   | ☠️              | ✅                       |
+    | Scala 2.12.12  | ✅   | ✅              | ☠️                       |
+    | Scala 2.13.3   | ✅   | ✅              | ☠️                       |
+    | Scala 3.0.0-M1 | ✅   | ✅              | ☠️                       |
+    | Dotty 0.27     | ✅   | ☠️<sup>1</sup>  | ☠️                       |
+
+  There's a problem with running MUnit on Scala.js with Dotty 0.27, so those tests are disabled.
 
 * Github Actions is used for CI and Releases
 

@@ -36,6 +36,18 @@ inThisBuild(
   )
 )
 
+val scala2Version  = Seq("2.13.3", "2.12.12")
+val dottyVersion   = Seq("0.27.0-RC1")
+val scala3Version  = Seq("3.0.0-M1")
+val scala11Version = Seq("2.11.12")
+
+lazy val munitSettings = Seq(
+  libraryDependencies += {
+    "org.scalameta" %%% "munit" % "0.7.17" % Test
+  },
+  testFrameworks += new TestFramework("munit.Framework")
+)
+
 lazy val core = projectMatrix
   .in(file("modules/core"))
   .settings(
@@ -43,10 +55,24 @@ lazy val core = projectMatrix
     scalacOptions.in(Test) ~= filterConsoleScalacOptions
   )
   .jvmPlatform(
-    scalaVersions = Seq("2.13.3", "2.12.12", "0.27.0-RC1", "3.0.0-M1")
+    scalaVersions = scala2Version ++ scala3Version,
+    settings = munitSettings
   )
   .jsPlatform(
-    scalaVersions = Seq("2.13.3", "2.12.12") //, "0.27.0-RC1")
+    scalaVersions = scala2Version ++ scala3Version,
+    settings = munitSettings
+  )
+  .jsPlatform(
+    scalaVersions = dottyVersion,
+    settings = Seq(
+      test := {}
+    )
+  )
+  .nativePlatform(
+    scalaVersions = scala11Version,
+    settings = munitSettings ++ Seq(
+      publishArtifact in (Compile, packageDoc) := false
+    )
   )
   .enablePlugins(BuildInfoPlugin)
   .settings(
@@ -58,8 +84,8 @@ lazy val core = projectMatrix
     ),
     scalaJSUseMainModuleInitializer := true,
     scalaJSLinkerConfig ~= (_.withModuleKind(ModuleKind.CommonJSModule)),
-    libraryDependencies += "org.scalameta" %%% "munit" % "0.7.16" % Test,
-    testFrameworks += new TestFramework("munit.Framework"),
+    publishArtifact in (Compile, packageDoc) :=
+      !scalaVersion.value.startsWith("0.27")
   )
 
 val scalafixRules = Seq(
@@ -78,7 +104,7 @@ val CICommands = Seq(
   s"core/scalafix --check $scalafixRules",
   "core/headerCheck",
   "undeclaredCompileDependenciesTest",
-  "missinglinkCheck"
+  "core/missinglinkCheck"
 ).mkString(";")
 
 val PrepareCICommands = Seq(
@@ -88,7 +114,6 @@ val PrepareCICommands = Seq(
   "core/compile:scalafmtAll",
   "core/scalafmtSbt",
   "core/headerCreate",
-  "missinglinkCheck",
   "undeclaredCompileDependenciesTest"
 ).mkString(";")
 

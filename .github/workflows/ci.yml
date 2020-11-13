@@ -11,3 +11,5 @@ jobs:
       - uses: olafurpg/setup-scala@v7
       - name: Test
         run: sbt ci
+      - name: Test publishing
+        run: sbt publishLocal
