@@ -3,11 +3,11 @@
 This is a template repository with some of the learnings from OSS Scala ecosystem applied.
 
 
-    |                | JVM | Scala.js (1.x) | Scala Native (0.4.0) |
-    | -------------- | --- | -------------- | ----------------------- |
-    | Scala 2.12.13  | ✅   | ✅            | ✅                    |
-    | Scala 2.13.4   | ✅   | ✅            | ✅                    |
-    | Scala 3.0.0-M3 | ✅   | ✅            | ✅                    |
+|                | JVM | Scala.js (1.x) | Scala Native (0.4.0) |
+| -------------- | --- | -------------- | ----------------------- |
+| Scala 2.12.13  | ✅   | ✅            | ✅                    |
+| Scala 2.13.4   | ✅   | ✅            | ✅                    |
+| Scala 3.0.0-M3 | ✅   | ✅            | ✅                    |
 
 
 * Github Actions is used for CI and Releases
