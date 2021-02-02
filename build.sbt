@@ -36,15 +36,18 @@ inThisBuild(
   )
 )
 
-lazy val nonJVMDependencySettings = Seq(
 // https://github.com/cb372/sbt-explicit-dependencies/issues/27
+lazy val disableDependencyChecks = Seq(
   unusedCompileDependenciesTest := {},
   missinglinkCheck := {},
   undeclaredCompileDependenciesTest := {}
 )
 
-val scala2Versions = Seq("2.13.4", "2.12.13")
-val scala3Versions = Seq("3.0.0-M3")
+val Scala213 = "2.13.4"
+val Scala212 = "2.12.13"
+val Scala3 = "3.0.0-M3"
+val scala2Versions = Seq(Scala213, Scala212)
+val scala3Versions = Seq(Scala3)
 
 lazy val munitSettings = Seq(
   libraryDependencies += {
@@ -61,8 +64,8 @@ lazy val core = projectMatrix
   )
   .settings(munitSettings)
   .jvmPlatform(scala2Versions ++ scala3Versions)
-  .jsPlatform(scala2Versions ++ scala3Versions, nonJVMDependencySettings)
-  .nativePlatform(scala2Versions, nonJVMDependencySettings)
+  .jsPlatform(scala2Versions ++ scala3Versions, disableDependencyChecks)
+  .nativePlatform(scala2Versions, disableDependencyChecks)
   .enablePlugins(BuildInfoPlugin)
   .settings(
     buildInfoPackage := "com.indoorvivants.library.internal",
@@ -74,6 +77,18 @@ lazy val core = projectMatrix
     scalaJSUseMainModuleInitializer := true,
     scalaJSLinkerConfig ~= (_.withModuleKind(ModuleKind.CommonJSModule))
   )
+
+lazy val docs = project
+  .in(file("myproject-docs"))
+  .settings(
+    scalaVersion := Scala213,
+    mdocVariables := Map(
+      "VERSION" -> version.value
+    )
+  )
+  .settings(disableDependencyChecks)
+  .dependsOn(core.jvm(Scala213))
+  .enablePlugins(MdocPlugin)
 
 val scalafixRules = Seq(
   "OrganizeImports",
@@ -87,6 +102,7 @@ val CICommands = Seq(
   "clean",
   "compile",
   "test",
+  "docs/mdoc",
   "core/scalafmtCheckAll",
   s"core/scalafix --check $scalafixRules",
   "core/headerCheck",

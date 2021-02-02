@@ -10,3 +10,4 @@ addSbtPlugin("de.heikoseeberger"         % "sbt-header"                % "5.6.0"
 addSbtPlugin("org.scala-js"              % "sbt-scalajs"               % "1.4.0")
 addSbtPlugin("ch.epfl.lamp"              % "sbt-dotty"                 % "0.5.2")
 addSbtPlugin("org.scala-native"          % "sbt-scala-native"          % "0.4.0")
+addSbtPlugin("org.scalameta"             % "sbt-mdoc"                  % "2.2.16")
