@@ -12,7 +12,7 @@ Global / excludeLintKeys += scalaJSLinkerConfig
 
 inThisBuild(
   List(
-    scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.4.3",
+    scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.5.0",
     semanticdbEnabled := true,
     semanticdbVersion := scalafixSemanticdb.revision,
     scalafixScalaBinaryVersion := scalaBinaryVersion.value,
@@ -36,14 +36,19 @@ inThisBuild(
   )
 )
 
-val scala2Version  = Seq("2.13.3", "2.12.12")
-val dottyVersion   = Seq("0.27.0-RC1")
-val scala3Version  = Seq("3.0.0-M1")
-val scala11Version = Seq("2.11.12")
+lazy val nonJVMDependencySettings = Seq(
+// https://github.com/cb372/sbt-explicit-dependencies/issues/27
+  unusedCompileDependenciesTest := {},
+  missinglinkCheck := {},
+  undeclaredCompileDependenciesTest := {}
+)
+
+val scala2Versions = Seq("2.13.4", "2.12.13")
+val scala3Versions = Seq("3.0.0-M3")
 
 lazy val munitSettings = Seq(
   libraryDependencies += {
-    "org.scalameta" %%% "munit" % "0.7.17" % Test
+    "org.scalameta" %%% "munit" % "0.7.21" % Test
   },
   testFrameworks += new TestFramework("munit.Framework")
 )
@@ -54,26 +59,10 @@ lazy val core = projectMatrix
     name := "core",
     scalacOptions.in(Test) ~= filterConsoleScalacOptions
   )
-  .jvmPlatform(
-    scalaVersions = scala2Version ++ scala3Version,
-    settings = munitSettings
-  )
-  .jsPlatform(
-    scalaVersions = scala2Version ++ scala3Version,
-    settings = munitSettings
-  )
-  .jsPlatform(
-    scalaVersions = dottyVersion,
-    settings = Seq(
-      test := {}
-    )
-  )
-  .nativePlatform(
-    scalaVersions = scala11Version,
-    settings = munitSettings ++ Seq(
-      publishArtifact in (Compile, packageDoc) := false
-    )
-  )
+  .settings(munitSettings)
+  .jvmPlatform(scala2Versions ++ scala3Versions)
+  .jsPlatform(scala2Versions ++ scala3Versions, nonJVMDependencySettings)
+  .nativePlatform(scala2Versions, nonJVMDependencySettings)
   .enablePlugins(BuildInfoPlugin)
   .settings(
     buildInfoPackage := "com.indoorvivants.library.internal",
@@ -83,9 +72,7 @@ lazy val core = projectMatrix
       scalaBinaryVersion
     ),
     scalaJSUseMainModuleInitializer := true,
-    scalaJSLinkerConfig ~= (_.withModuleKind(ModuleKind.CommonJSModule)),
-    publishArtifact in (Compile, packageDoc) :=
-      !scalaVersion.value.startsWith("0.27")
+    scalaJSLinkerConfig ~= (_.withModuleKind(ModuleKind.CommonJSModule))
   )
 
 val scalafixRules = Seq(
@@ -104,6 +91,7 @@ val CICommands = Seq(
   s"core/scalafix --check $scalafixRules",
   "core/headerCheck",
   "undeclaredCompileDependenciesTest",
+  "unusedCompileDependenciesTest",
   "core/missinglinkCheck"
 ).mkString(";")
 
