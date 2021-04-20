@@ -1,11 +1,3 @@
-lazy val root = project
-  .aggregate(
-    (core.projectRefs): _*
-  )
-  .settings(
-    skip in publish := true
-  )
-
 Global / excludeLintKeys += logManager
 Global / excludeLintKeys += scalaJSUseMainModuleInitializer
 Global / excludeLintKeys += scalaJSLinkerConfig
@@ -43,24 +35,29 @@ lazy val disableDependencyChecks = Seq(
   undeclaredCompileDependenciesTest := {}
 )
 
-val Scala213 = "2.13.4"
-val Scala212 = "2.12.13"
-val Scala3 = "3.0.0-M3"
+val Scala213       = "2.13.5"
+val Scala212       = "2.12.13"
+val Scala3         = "3.0.0-RC3"
+val Scala3_prev    = "3.0.0-RC2"
 val scala2Versions = Seq(Scala213, Scala212)
-val scala3Versions = Seq(Scala3)
+val scala3Versions = Seq(Scala3, Scala3_prev)
 
 lazy val munitSettings = Seq(
   libraryDependencies += {
-    "org.scalameta" %%% "munit" % "0.7.21" % Test
+    "org.scalameta" %%% "munit" % "0.7.25" % Test
   },
   testFrameworks += new TestFramework("munit.Framework")
 )
+
+
+lazy val root = projectMatrix
+  .aggregate(core)
 
 lazy val core = projectMatrix
   .in(file("modules/core"))
   .settings(
     name := "core",
-    scalacOptions.in(Test) ~= filterConsoleScalacOptions
+    Test / scalacOptions ~= filterConsoleScalacOptions
   )
   .settings(munitSettings)
   .jvmPlatform(scala2Versions ++ scala3Versions)
