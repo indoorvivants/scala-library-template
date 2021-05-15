@@ -7,8 +7,7 @@ This is a template repository with some of the learnings from OSS Scala ecosyste
 | -------------- | --- | -------------- | ----------------------- |
 | Scala 2.12.13  | ✅   | ✅            | ✅                    |
 | Scala 2.13.5   | ✅   | ✅            | ✅                    |
-| Scala 3.0.0-RC3 | ✅   | ✅            |                     |
-| Scala 3.0.0-RC2 | ✅   | ✅            |                     |
+| Scala 3.0.0    | ✅   | ✅            |                     |
 
 
 * Github Actions is used for CI and Releases
