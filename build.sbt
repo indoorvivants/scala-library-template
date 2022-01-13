@@ -4,12 +4,12 @@ Global / excludeLintKeys += scalaJSLinkerConfig
 
 inThisBuild(
   List(
-    scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.5.0",
-    semanticdbEnabled := true,
-    semanticdbVersion := scalafixSemanticdb.revision,
+    scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.6.0",
+    semanticdbEnabled          := true,
+    semanticdbVersion          := scalafixSemanticdb.revision,
     scalafixScalaBinaryVersion := scalaBinaryVersion.value,
-    organization := "com.indoorvivants",
-    organizationName := "Anton Sviridov",
+    organization               := "com.indoorvivants",
+    organizationName           := "Anton Sviridov",
     homepage := Some(
       url("https://github.com/indoorvivants/scala-library-template")
     ),
@@ -30,24 +30,27 @@ inThisBuild(
 
 // https://github.com/cb372/sbt-explicit-dependencies/issues/27
 lazy val disableDependencyChecks = Seq(
-  unusedCompileDependenciesTest := {},
-  missinglinkCheck := {},
+  unusedCompileDependenciesTest     := {},
+  missinglinkCheck                  := {},
   undeclaredCompileDependenciesTest := {}
 )
 
-val Scala213       = "2.13.5"
-val Scala212       = "2.12.13"
-val Scala3         = "3.0.0"
-val scala2Versions = Seq(Scala213, Scala212)
-val scalaVersions = scala2Versions :+ Scala3
+val Versions = new {
+  val Scala213      = "2.13.8"
+  val Scala212      = "2.12.15"
+  val Scala3        = "3.1.0"
+  val Scalas = List(Scala212, Scala213, Scala3)
+
+  val munit           = "0.7.29"
+  val organizeImports = "0.6.0"
+}
 
 lazy val munitSettings = Seq(
   libraryDependencies += {
-    "org.scalameta" %%% "munit" % "0.7.26" % Test
+    "org.scalameta" %%% "munit" % Versions.munit % Test
   },
   testFrameworks += new TestFramework("munit.Framework")
 )
-
 
 lazy val root = projectMatrix
   .aggregate(core)
@@ -59,9 +62,9 @@ lazy val core = projectMatrix
     Test / scalacOptions ~= filterConsoleScalacOptions
   )
   .settings(munitSettings)
-  .jvmPlatform(scalaVersions)
-  .jsPlatform(scalaVersions, disableDependencyChecks)
-  .nativePlatform(scala2Versions, disableDependencyChecks)
+  .jvmPlatform(Versions.Scalas)
+  .jsPlatform(Versions.Scalas, disableDependencyChecks)
+  .nativePlatform(List(Versions.Scala212, Versions.Scala213), disableDependencyChecks)
   .enablePlugins(BuildInfoPlugin)
   .settings(
     buildInfoPackage := "com.indoorvivants.library.internal",
@@ -77,13 +80,13 @@ lazy val core = projectMatrix
 lazy val docs = project
   .in(file("myproject-docs"))
   .settings(
-    scalaVersion := Scala213,
+    scalaVersion := Versions.Scala213,
     mdocVariables := Map(
       "VERSION" -> version.value
     )
   )
   .settings(disableDependencyChecks)
-  .dependsOn(core.jvm(Scala213))
+  .dependsOn(core.jvm(Versions.Scala213))
   .enablePlugins(MdocPlugin)
 
 val scalafixRules = Seq(
