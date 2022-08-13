@@ -1,5 +1,5 @@
 addSbtPlugin("io.github.davidgregory084" % "sbt-tpolecat"              % "0.1.13")
-addSbtPlugin("ch.epfl.scala"             % "sbt-missinglink"           % "0.3.2")
+addSbtPlugin("ch.epfl.scala"             % "sbt-missinglink"           % "0.3.3")
 addSbtPlugin("com.github.cb372"          % "sbt-explicit-dependencies" % "0.2.16")
 addSbtPlugin("org.scalameta"             % "sbt-scalafmt"              % "2.4.6")
 addSbtPlugin("com.github.sbt"            % "sbt-ci-release"            % "1.5.10")
