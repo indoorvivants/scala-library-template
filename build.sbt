@@ -97,7 +97,7 @@ val CICommands = Seq(
   "test",
   "docs/mdoc",
   "scalafmtCheckAll",
-  "scalafmtCheckSbt",
+  "scalafmtSbtCheck",
   s"scalafix --check $scalafixRules",
   "headerCheck",
   "undeclaredCompileDependenciesTest",
