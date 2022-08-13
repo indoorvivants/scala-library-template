@@ -35,11 +35,11 @@ lazy val disableDependencyChecks = Seq(
   undeclaredCompileDependenciesTest := {}
 )
 
-val Scala213       = "2.13.5"
+val Scala213       = "2.13.8"
 val Scala212       = "2.12.13"
 val Scala3         = "3.0.0"
 val scala2Versions = Seq(Scala213, Scala212)
-val scalaVersions = scala2Versions :+ Scala3
+val scalaVersions  = scala2Versions :+ Scala3
 
 lazy val munitSettings = Seq(
   libraryDependencies += {
@@ -47,7 +47,6 @@ lazy val munitSettings = Seq(
   },
   testFrameworks += new TestFramework("munit.Framework")
 )
-
 
 lazy val root = projectMatrix
   .aggregate(core)
