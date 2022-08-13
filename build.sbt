@@ -78,7 +78,9 @@ lazy val docs = project
     scalaVersion := Scala213,
     mdocVariables := Map(
       "VERSION" -> version.value
-    )
+    ),
+    publish / skip := true,
+    publishLocal / skip := true
   )
   .settings(disableDependencyChecks)
   .dependsOn(core.jvm(Scala213))
