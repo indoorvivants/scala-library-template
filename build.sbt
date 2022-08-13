@@ -4,7 +4,7 @@ Global / excludeLintKeys += scalaJSLinkerConfig
 
 inThisBuild(
   List(
-    scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.5.0",
+    scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.6.0",
     semanticdbEnabled := true,
     semanticdbVersion := scalafixSemanticdb.revision,
     scalafixScalaBinaryVersion := scalaBinaryVersion.value,
@@ -35,15 +35,14 @@ lazy val disableDependencyChecks = Seq(
   undeclaredCompileDependenciesTest := {}
 )
 
-val Scala213       = "2.13.5"
-val Scala212       = "2.12.13"
-val Scala3         = "3.0.0"
-val scala2Versions = Seq(Scala213, Scala212)
-val scalaVersions  = scala2Versions :+ Scala3
+val Scala213 = "2.13.8"
+val Scala212 = "2.12.16"
+val Scala3 = "3.1.3"
+val scalaVersions = Seq(Scala3, Scala212, Scala213)
 
 lazy val munitSettings = Seq(
   libraryDependencies += {
-    "org.scalameta" %%% "munit" % "0.7.26" % Test
+    "org.scalameta" %%% "munit" % "1.0.0-M6" % Test
   },
   testFrameworks += new TestFramework("munit.Framework")
 )
@@ -60,7 +59,7 @@ lazy val core = projectMatrix
   .settings(munitSettings)
   .jvmPlatform(scalaVersions)
   .jsPlatform(scalaVersions, disableDependencyChecks)
-  .nativePlatform(scala2Versions, disableDependencyChecks)
+  .nativePlatform(scalaVersions, disableDependencyChecks)
   .enablePlugins(BuildInfoPlugin)
   .settings(
     buildInfoPackage := "com.indoorvivants.library.internal",
@@ -89,7 +88,6 @@ val scalafixRules = Seq(
   "OrganizeImports",
   "DisableSyntax",
   "LeakingImplicitClassVal",
-  "ProcedureSyntax",
   "NoValInForComprehension"
 ).mkString(" ")
 
@@ -98,21 +96,20 @@ val CICommands = Seq(
   "compile",
   "test",
   "docs/mdoc",
-  "core/scalafmtCheckAll",
-  s"core/scalafix --check $scalafixRules",
-  "core/headerCheck",
+  "scalafmtCheckAll",
+  "scalafmtCheckSbt",
+  s"scalafix --check $scalafixRules",
+  "headerCheck",
   "undeclaredCompileDependenciesTest",
   "unusedCompileDependenciesTest",
-  "core/missinglinkCheck"
+  "missinglinkCheck"
 ).mkString(";")
 
 val PrepareCICommands = Seq(
-  s"core/compile:scalafix --rules $scalafixRules",
-  s"core/test:scalafix --rules $scalafixRules",
-  "core/test:scalafmtAll",
-  "core/compile:scalafmtAll",
-  "core/scalafmtSbt",
-  "core/headerCreate",
+  s"scalafix --rules $scalafixRules",
+  "scalafmtAll",
+  "scalafmtSbt",
+  "headerCreate",
   "undeclaredCompileDependenciesTest"
 ).mkString(";")
 
