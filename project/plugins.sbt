@@ -11,7 +11,7 @@ addSbtPlugin("com.eed3si9n" % "sbt-buildinfo" % "0.11.0")
 addSbtPlugin("de.heikoseeberger" % "sbt-header" % "5.7.0")
 
 // Compiled documentation
-addSbtPlugin("org.scalameta" % "sbt-mdoc" % "2.3.3")
+addSbtPlugin("org.scalameta" % "sbt-mdoc" % "2.3.4")
 
 // Scala.js and Scala Native
 addSbtPlugin("org.scala-js" % "sbt-scalajs" % "1.11.0")
