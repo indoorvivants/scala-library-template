@@ -14,5 +14,5 @@ addSbtPlugin("de.heikoseeberger" % "sbt-header" % "5.9.0")
 addSbtPlugin("org.scalameta" % "sbt-mdoc" % "2.3.6")
 
 // Scala.js and Scala Native
-addSbtPlugin("org.scala-js" % "sbt-scalajs" % "1.11.0")
+addSbtPlugin("org.scala-js" % "sbt-scalajs" % "1.12.0")
 addSbtPlugin("org.scala-native" % "sbt-scala-native" % "0.4.8")
