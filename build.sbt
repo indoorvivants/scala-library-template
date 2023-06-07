@@ -35,7 +35,7 @@ lazy val disableDependencyChecks = Seq(
   undeclaredCompileDependenciesTest := {}
 )
 
-val Scala213 = "2.13.10"
+val Scala213 = "2.13.11"
 val Scala212 = "2.12.17"
 val Scala3 = "3.2.2"
 val scalaVersions = Seq(Scala3, Scala212, Scala213)
