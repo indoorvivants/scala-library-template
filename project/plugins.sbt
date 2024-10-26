@@ -1,5 +1,5 @@
 addSbtPlugin("com.github.sbt" % "sbt-ci-release" % "1.5.12")
-addSbtPlugin("com.eed3si9n" % "sbt-projectmatrix" % "0.9.2")
+addSbtPlugin("com.eed3si9n" % "sbt-projectmatrix" % "0.10.0")
 
 // Code quality
 addSbtPlugin("io.github.davidgregory084" % "sbt-tpolecat" % "0.1.22")
