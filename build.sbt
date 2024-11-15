@@ -89,12 +89,12 @@ val scalafixRules = Seq(
 
 val CICommands = Seq(
   "clean",
+  "scalafixEnable",
   "compile",
   "test",
   "docs/mdoc",
   "scalafmtCheckAll",
   "scalafmtSbtCheck",
-  "scalafixEnable",
   s"scalafix --check $scalafixRules",
   "headerCheck",
   "undeclaredCompileDependenciesTest",
