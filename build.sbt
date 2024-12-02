@@ -38,7 +38,7 @@ val scalaVersions = Seq(Scala3, Scala212, Scala213)
 
 lazy val munitSettings = Seq(
   libraryDependencies += {
-    "org.scalameta" %%% "munit" % "1.0.2" % Test
+    "org.scalameta" %%% "munit" % "1.0.3" % Test
   },
   testFrameworks += new TestFramework("munit.Framework")
 )
